@@ -1,0 +1,155 @@
+{
+	"Mapping": {
+		"Step-1": {
+			"connections": {
+				"Source": [{
+					"Source1": {
+						"ip": "127.0.0.1",
+						"db_name": "Oracle",
+						"username": "ankur",
+						"password": "ankur",
+						"db_port": "1521",
+						"service": "xe",
+						"schema_name": ""
+					}
+				}, {
+					"Source2": {
+						"ip": "127.0.0.1",
+						"db_name": "Oracle",
+						"username": "ankur",
+						"password": "ankur",
+						"db_port": "1521",
+						"service": "xe",
+						"schema_name": ""
+					}
+				}],
+				"Target": {
+					"ip": "localhost",
+					"db_name": "Oracle",
+					"username": "ankur",
+					"password": "ankur",
+					"db_port": "1521",
+					"service": "xe"
+				}
+			}
+		},
+		"Step-2": {
+			"Step-2.1": {
+				"Joiner": {
+					"JoinerName": "Emp_Dept_Join",
+					"Tables": {
+						"Table1": {
+							"Conn Details": "Source1",
+							"Schema Details": {
+								"EMPLOYEES": {
+									"EMPLOYEE_ID": "INT",
+									"FIRST_NAME": "VARCHAR2(100)",
+									"LAST_NAME": "VARCHAR2(100)",
+									"EMAIL": "VARCHAR2(100)",
+									"HIRE_DATE": "DATE",
+									"DEPARTMENT_ID": "INT"
+								}
+							}
+						},
+						"Table2": {
+							"Conn Details": "Source1",
+							"Schema Details": {
+								"DEPARTMENTS": {
+									"DEPARTMENT_ID": "INT",
+									"DEPARTMENT_NAME": "VARCHAR2(100)"
+								}
+							}
+						}
+					},
+					"Join_Condition": "EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID",
+					"Join_Type": "INNER"
+				}
+			},
+			"Step-2.2": {
+				"Expression": {
+					"Name": "Test_Express",
+					"Columns": {
+						"EMPLOYEE_ID": {
+							"DATATYPE": "INT",
+							"Expression": "EMPLOYEE_ID",
+							"SOURCE": "Emp_Dept_Join"
+						},
+						"FIRST_NAME": {
+							"DATATYPE": "VARCHAR2(100)",
+							"Expression": "FIRST_NAME",
+							"SOURCE": "Emp_Dept_Join"
+						},
+						"LAST_NAME": {
+							"DATATYPE": "VARCHAR2(100)",
+							"Expression": "LAST_NAME",
+							"SOURCE": "Emp_Dept_Join"
+						},
+						"EMAIL": {
+							"DATATYPE": "VARCHAR2(100)",
+							"Expression": "EMAIL",
+							"SOURCE": "Emp_Dept_Join"
+						},
+						"HIRE_DATE": {
+							"DATATYPE": "DATE",
+							"Expression": "HIRE_DATE",
+							"SOURCE": "Emp_Dept_Join"
+						},
+						"DEPARTMENT_ID": {
+							"DATATYPE": "INT",
+							"Expression": "DEPARTMENT_ID",
+							"SOURCE": "Emp_Dept_Join"
+						},
+						"DEPARTMENT_NAME": {
+							"DATATYPE": "VARCHAR2(100)",
+							"Expression": "DEPARTMENT_NAME",
+							"SOURCE": "Emp_Dept_Join"
+						}
+					}
+				}
+			}
+		},
+		"Step-3": {
+			"Target": {
+				"Name": "EMPLOYEE_DEPT",
+				"Columns": {
+					"EMPLOYEE_ID": {
+						"DATATYPE": "INT",
+						"Expression": "EMPLOYEE_ID",
+						"SOURCE": "Test_Express"
+					},
+					"FIRST_NAME": {
+						"DATATYPE": "VARCHAR2(100)",
+						"Expression": "FIRST_NAME",
+						"SOURCE": "Test_Express"
+					},
+					"LAST_NAME": {
+						"DATATYPE": "VARCHAR2(100)",
+						"Expression": "LAST_NAME",
+						"SOURCE": "Test_Express"
+					},
+					"EMAIL": {
+						"DATATYPE": "VARCHAR2(100)",
+						"Expression": "EMAIL",
+						"SOURCE": "Test_Express"
+					},
+					"HIRE_DATE": {
+						"DATATYPE": "DATE",
+						"Expression": "HIRE_DATE",
+						"SOURCE": "Test_Express"
+					},
+					"DEPARTMENT_ID": {
+						"DATATYPE": "INT",
+						"Expression": "DEPARTMENT_ID",
+						"SOURCE": "Test_Express"
+					},
+					"DEPARTMENT_NAME": {
+						"DATATYPE": "VARCHAR2(100)",
+						"Expression": "DEPARTMENT_NAME",
+						"SOURCE": "Test_Express"
+					}
+				},
+				"Action": "Insert"
+			}
+		}
+	}
+}
